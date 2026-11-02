@@ -1,0 +1,31 @@
+# Служебные папки .NET
+[Bb]in/
+[Oo]bj/
+.vs/
+
+# Файлы сборки .NET
+*.dll
+*.exe
+*.pdb
+*.user
+*.suo
+
+# Артефакты сборки C/C++ (Visual Studio, MSVC, MinGW)
+*.ilk
+*.obj
+*.pch
+*.idb
+*.exp
+*.lib
+*.o
+*.a
+*.out
+Debug/
+Release/
+x64/
+x86/
+*.tlog
+*.log
+
+# Прочее
+*.log
