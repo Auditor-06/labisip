@@ -208,10 +208,63 @@ static void main40()
             else if (f == "6")
             {
                 Console.WriteLine();
+                main66();
             }
             else if (f == "7")
             {
                 Console.WriteLine();
+                main67();
+            }
+            else if (f == "Back" || f == "back")
+            {
+                Console.WriteLine();
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Ошибка: введено недопустимое значение. Повторите ввод");
+                Console.WriteLine();
+                continue;
+            }
+        }
+    }
+    static void main70()
+    {
+        Console.WriteLine("Лабораторная работа №7. Функции и рекурсия");
+        while (true)
+        {
+            Console.WriteLine("Выберите задание которое хотите проверить (от 1 до 6 или \"Back\" чтобы вернуться к выбору лабораторной работы");
+            Console.Write("Введите цифру задания которое хотите проверить: ");
+            string f = Console.ReadLine() ?? "";
+            if (f == "1")
+            {
+                Console.WriteLine();
+                main71();
+            }
+            else if (f == "2")
+            {
+                Console.WriteLine();
+                //main72();
+            }
+            else if (f == "3")
+            {
+                Console.WriteLine();
+                //main73();
+            }
+            else if (f == "4")
+            {
+                Console.WriteLine();
+                //main74();
+            }
+            else if (f == "5")
+            {
+                Console.WriteLine();
+                //main75();
+            }
+            else if (f == "6")
+            {
+                Console.WriteLine();
+                //main76();
             }
             else if (f == "Back" || f == "back")
             {
@@ -733,7 +786,7 @@ char.IsPunctuation(c);  // true для ., , ! ? и т.п. */
         int count=0;
         while ((pos = stroka.IndexOf(userinput, pos)) != -1)
         {
-            count++;
+           count++;
             pos++;
         }
         Console.WriteLine($"В строке \"{stroka}\" вхождений заданного \"{userinput}\" : {count}");
@@ -761,4 +814,117 @@ char.IsPunctuation(c);  // true для ., , ! ? и т.п. */
         }
         Console.WriteLine(string.Join(" ", stroka));
     }
+    static void main66()
+    {
+        Console.WriteLine("Реализовать собственную функцию сравнения строк (аналог strcmp) и функцию конкатенации строк без использования стандартных библиотечных функций.");
+        string stroka1 =  "сиди";
+        string stroka2 =  "дома";
+        static int strcmp(string word1,string word2)
+        {
+            int minLen = word1.Length < word2.Length ? word1.Length : word2.Length;
+            for(int i = 0; i < minLen; i++)
+            {     
+                if(word1[i]>word2[i]){Console.WriteLine("Левая строка больше правой");return 1;}
+                else if(word1[i]<word2[i]){Console.WriteLine("Правая строка больше левой");return -1;}
+            }
+            if(word1.Length>word2.Length){Console.WriteLine("Левая строка больше правой");return 1;}
+            else if(word1.Length<word2.Length){Console.WriteLine("Правая строка больше левой");return -1;}
+            Console.WriteLine("Обе строки равны");
+            return 0;
+        }
+        static string Concat(string word1,string word2)
+        {
+
+            char[] result = new char[word1.Length + word2.Length];
+            for (int i = 0; i < word1.Length; i++) result[i] = word1[i];
+            for (int i = 0; i < word2.Length; i++) result[word1.Length + i] = word2[i];
+            return new string(result);
+        }
+        Console.WriteLine($"Итог strcmp: {strcmp(stroka1,stroka2)}");
+        Console.WriteLine($"Итог конкатенации: {Concat(stroka1,stroka2)}");
+    }
+    static void main67()
+    {
+        Console.WriteLine("Реализовать собственную функцию сравнения строк (аналог strcmp) и функцию конкатенации строк без использования стандартных библиотечных функций.");
+        string stroka =  "Люди сидят рядом, но каждый — в своём экране, и тишина между ними громче любого шума";
+        static string CleanWord(string w)
+        {
+            char[] result = new char[w.Length];
+            int k = 0;
+            foreach (char c in w)
+            {
+                if (char.IsLetterOrDigit(c))
+                result[k++] = c;
+            }
+            char[] trimmed = new char[k];
+            for (int i = 0; i < k; i++)
+                trimmed[i] = result[i];
+            return new string(trimmed);
+        }
+        int indexrange =0;
+        string[] words = stroka.Split(' ');
+        for(int i = 0; i < words.Length; i++)
+        {
+            words[i] = CleanWord(words[i]);
+            if(words[indexrange].Length<words[i].Length){indexrange =i;}
+        }
+        Console.WriteLine($"Самое длинное слово: {words[indexrange]}");
+        string userinput;
+        while (true)
+        {
+            Console.Write("Введите строку: ");
+            userinput = Console.ReadLine() ?? "";
+            if (!string.IsNullOrEmpty(userinput))
+            break;
+            Console.WriteLine("Пустой ввод, попробуйте ещё раз.");
+        }
+        userinput = userinput.ToLower();
+        char[] arr1= userinput.ToCharArray();
+        Array.Sort(arr1);
+        for(int j = 0; j < words.Length; j++)
+        {
+            words[j] = CleanWord(words[j]);
+            string temp =words[j];
+            words[j]=words[j].ToLower();
+            char[] arr2= words[j].ToCharArray();
+            Array.Sort(arr2);
+            if(arr1.Length == arr2.Length){
+                bool isAnagram = true;
+                for (int i = 0; i < arr1.Length; i++){
+                    if (arr1[i] != arr2[i])
+                    { isAnagram = false; break; }
+                }
+                if (isAnagram) Console.WriteLine($"Анаграмма: {temp}");
+            }
+        }
+    }
+    static void main71()
+    {
+        Console.WriteLine($"Оформить в виде отдельных функций несколько задач из предыдущих лабораторных работ (факториал, проверка простоты числа, сумма цифр).");
+        static int factorial(int a)
+        {
+            int fact=1;
+            for(int i = 1; i <= a; i++)
+            {
+                fact*=i;
+            }
+            return fact;
+        }
+        static void proverkaprosrcislo(float a)
+        {
+           if(a%2==0){Console.WriteLine($"Число {a} простое");}
+           else {Console.WriteLine($"Число {a} не простое");}
+           return;
+        }
+        static float summa2cislo(float a,float b)
+        {
+           float c= a+b;
+           return c;
+        }
+        Console.WriteLine($"Факториал числа 5 = {factorial(5)}");
+        proverkaprosrcislo(5);
+        Console.WriteLine($"Сумма чисел 67 и 72 = {summa2cislo(67,72)}");
+    }
+
+
 }
