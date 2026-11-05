@@ -31,6 +31,7 @@ class Program
             else if (f == "7")
             {
                 Console.WriteLine();
+                main70();
             }
             else if (f == "8")
             {
@@ -244,12 +245,12 @@ static void main40()
             else if (f == "2")
             {
                 Console.WriteLine();
-                //main72();
+                main72();
             }
             else if (f == "3")
             {
                 Console.WriteLine();
-                //main73();
+                main73();
             }
             else if (f == "4")
             {
@@ -910,21 +911,69 @@ char.IsPunctuation(c);  // true для ., , ! ? и т.п. */
             }
             return fact;
         }
-        static void proverkaprosrcislo(float a)
+        static void proverkaprosrcislo(int a)
         {
-           if(a%2==0){Console.WriteLine($"Число {a} простое");}
-           else {Console.WriteLine($"Число {a} не простое");}
-           return;
+			bool prostoe = true;
+            if (a < 2) {Console.WriteLine($"Число {a} не простое");return;}
+            for(int i = 2; i <= a; i++)
+			{
+				if(a%i==0&&a!=i){Console.WriteLine($"Число {a} не простое");prostoe = false;break;}
+			}
+			if(prostoe){Console.WriteLine($"Число {a} простое");}
         }
-        static float summa2cislo(float a,float b)
+        static float summacislo(int a)
         {
-           float c= a+b;
-           return c;
+        while (true) 
+        {
+            int b = 0, sum = 0;
+            while (a != 0) {
+                b = a % 10;
+                sum += a % 10;
+                a -= b;
+                a /= 10;
+            } 
+            return sum;
         }
+    }
         Console.WriteLine($"Факториал числа 5 = {factorial(5)}");
         proverkaprosrcislo(5);
-        Console.WriteLine($"Сумма чисел 67 и 72 = {summa2cislo(67,72)}");
+        Console.WriteLine($"Сумма цифер 6772 = {summacislo(6772)}");
     }
-
+    static void main72()
+    {
+        Console.WriteLine($"Реализовать вычисление факториала и N-го числа Фибоначчи рекурсивно; сравнить с итеративной версией по скорости при больших N.).");
+        static long FactorialR(int n)
+        {
+            if (n < 0) throw new ArgumentException("Факториал отрицательного не определён");
+            if (n == 0 || n == 1) return 1; 
+            return n * FactorialR(n - 1);
+        }
+            static long FibR(int n)
+        {
+            if (n == 0) return 0;    
+            if (n == 1) return 1;    
+            return FibR(n - 1) + FibR(n - 2);
+        }
+        Console.WriteLine($"Рекурсивный факториал: {FactorialR(5)}");
+        Console.WriteLine($"Рекурсивный число фибоначчи{FibR(5)}");
+    }
+    static void main73()
+    {
+        Console.WriteLine($"Реализовать вычисление факториала и N-го числа Фибоначчи рекурсивно; сравнить с итеративной версией по скорости при больших N.).");
+        static long FactorialR(int n)
+        {
+            if (n < 0) throw new ArgumentException("Факториал отрицательного не определён");
+            if (n == 0 || n == 1) return 1; 
+            return n * FactorialR(n - 1);
+        }
+            static long FibR(int n)
+        {
+            if (n == 0) return 0;    
+            if (n == 1) return 1;    
+            return FibR(n - 1) + FibR(n - 2);
+        }
+        Console.WriteLine($"Рекурсивный факториал: {FactorialR(5)}");
+        Console.WriteLine($"Рекурсивный число фибоначчи{FibR(5)}");
+    }
 
 }
