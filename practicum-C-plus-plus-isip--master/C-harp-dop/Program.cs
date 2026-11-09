@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics;
 class Program
 {
     static void Main()
@@ -36,6 +37,7 @@ class Program
             else if (f == "8")
             {
                 Console.WriteLine();
+                main80();
             }
             else if (f == "9")
             {
@@ -99,10 +101,12 @@ static void main40()
             else if (f == "7")
             {
                 Console.WriteLine();
+                main47();
             }
             else if (f == "8")
             {
                 Console.WriteLine();
+                main48();
             }
             else if (f == "Back" || f == "back")
             {
@@ -255,17 +259,68 @@ static void main40()
             else if (f == "4")
             {
                 Console.WriteLine();
-                //main74();
+                main74();
             }
             else if (f == "5")
             {
                 Console.WriteLine();
-                //main75();
+                main75();
             }
             else if (f == "6")
             {
                 Console.WriteLine();
-                //main76();
+                main76();
+            }
+            else if (f == "Back" || f == "back")
+            {
+                Console.WriteLine();
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Ошибка: введено недопустимое значение. Повторите ввод");
+                Console.WriteLine();
+                continue;
+            }
+        }
+    }
+    static void main80()
+    {
+        Console.WriteLine("Лабораторная работа №8. Сортировка и поиск (продвинутый уровень)");
+        while (true)
+        {
+            Console.WriteLine("Выберите задание которое хотите проверить (от 1 до 6 или \"Back\" чтобы вернуться к выбору лабораторной работы");
+            Console.Write("Введите цифру задания которое хотите проверить: ");
+            string f = Console.ReadLine() ?? "";
+            if (f == "1")
+            {
+                Console.WriteLine();
+                main81();
+            }
+            else if (f == "2")
+            {
+                Console.WriteLine();
+                main82();
+            }
+            else if (f == "3")
+            {
+                Console.WriteLine();
+                main83();
+            }
+            else if (f == "4")
+            {
+                Console.WriteLine();
+                main84();
+            }
+            else if (f == "5")
+            {
+                Console.WriteLine();
+                main85();
+            }
+            else if (f == "6")
+            {
+                Console.WriteLine();
+                main86();
             }
             else if (f == "Back" || f == "back")
             {
@@ -374,6 +429,185 @@ static void main45()
             if(a[i]==null){Console.Write($"null ");}
             else {Console.Write($"{a[i]} ");}
         }
+        Console.WriteLine();
+    }
+    static void main47()
+    {
+        Console.WriteLine("Реализовать сортировку массива методом пузырька и методом выбора; сравнить количество операций сравнения.");
+        int[] a ={225,523,6,234,6723,24,623,623,845,845};
+        int indexmin = 0;
+        int min = a[indexmin];
+        int comparision=0;
+        //метод выборки
+        for(int j = 0;j<a.Length; j++)
+        {
+            if (a[j] < min)
+            {
+                indexmin=j;
+                min=a[indexmin];
+            }
+        }
+        for(int i = 0; i<a.Length; i++)
+        {
+            if (a[i] > min)
+            {
+                (a[i],a[indexmin])=(a[indexmin],a[i]);
+                comparision++;
+                indexmin=comparision;
+                min=a[comparision];
+                for(int j = comparision;j<a.Length; j++)
+                {
+                    if (a[j] < min)
+                    {
+                        indexmin=j;
+                        min=a[indexmin];
+                    }
+                }
+                i=0;
+            }
+        }
+        Console.Write($"Массив отсортированный методом выборки: ");  
+        for(int i = 0; i < a.Length; i++)
+        {
+            Console.Write($"{a[i]} ");
+        }
+        //метод пузырька
+        int[] b = {225,523,6,234,6723,24,623,623,845,845};
+        for(int i = 1; i < b.Length; i++)
+        {
+            if (b[i - 1] > b[i])
+            {
+                (b[i - 1],b[i])=(b[i],b[i - 1]);
+                i=0;
+            }
+        }
+        Console.WriteLine();
+        Console.Write($"Массив отсортированный методом пузырька: "); 
+        for(int i = 0; i < a.Length; i++)
+        {
+            Console.Write($"{b[i]} ");
+        }
+        Console.WriteLine();
+        Console.WriteLine();
+    }
+        /*Вариант нейросети:
+    {
+        Console.WriteLine("Сортировка выбором и пузырьком; сравнение количества сравнений.");
+
+        int[] original = { 225, 523, 6, 234, 6723, 24, 623, 623, 845, 845 };
+
+        // ============================================================
+        // 1. СОРТИРОВКА ВЫБОРОМ
+        // ============================================================
+        int[] a = (int[])original.Clone();
+        int selectionComparisons = 0;
+
+        for (int i = 0; i < a.Length - 1; i++)
+        {
+            int minIdx = i;
+            for (int j = i + 1; j < a.Length; j++)
+            {
+                selectionComparisons++;                 // считаем КАЖДОЕ сравнение
+                if (a[j] < a[minIdx]) minIdx = j;
+            }
+            if (minIdx != i)
+                (a[i], a[minIdx]) = (a[minIdx], a[i]);  // своп через кортеж
+        }
+
+        Console.WriteLine($"\nВыбор: сравнений = {selectionComparisons}");
+        Console.Write("Результат: ");
+        for (int k = 0; k < a.Length; k++) Console.Write($"{a[k]} ");
+        Console.WriteLine();
+
+        // ============================================================
+        // 2. СОРТИРОВКА ПУЗЫРЬКОМ (классическая, с флагом swapped)
+        // ============================================================
+        int[] b = (int[])original.Clone();
+        int bubbleComparisons = 0;
+
+        for (int i = 0; i < b.Length - 1; i++)
+        {
+            bool swapped = false;
+            for (int j = 0; j < b.Length - 1 - i; j++)
+            {
+                bubbleComparisons++;                    // считаем КАЖДОЕ сравнение
+                if (b[j] > b[j + 1])
+                {
+                    (b[j], b[j + 1]) = (b[j + 1], b[j]);
+                    swapped = true;
+                }
+            }
+            if (!swapped) break;                        // уже отсортирован — досрочный выход
+        }
+
+        Console.WriteLine($"\nПузырёк: сравнений = {bubbleComparisons}");
+        Console.Write("Результат: ");
+        for (int k = 0; k < b.Length; k++) Console.Write($"{b[k]} ");
+        Console.WriteLine();
+        Console.WriteLine();
+    }
+        */
+    static void main48()
+    {
+        Console.WriteLine("Реализовать бинарный поиск элемента в отсортированном массиве и сравнить с линейным поиском по числу итераций.");
+        int[] a = {6, 24, 225, 234, 523, 623, 623, 845, 845, 6723};
+        int number;
+        bool nosearch=true;
+        int linearIterations = 0;
+        while (true)
+        {
+            Console.Write("Введите целое число: ");
+            string userinput = Console.ReadLine() ?? "";
+            if (int.TryParse(userinput, out number))
+                break;                                  
+            Console.WriteLine("Ошибка ввода, перезапуск");
+        }
+        //Линейный поиск
+        for(int i = 0; i < a.Length; i++)
+        {
+            linearIterations++;
+            if(a[i]==number)
+            {
+                Console.WriteLine($"Искомое число {number} находится под индексом {i}");
+                Console.WriteLine($"Количество итераций линейного поиска: {linearIterations}");
+                nosearch=false;break;
+            }
+        }
+        linearIterations = 0;
+        //бинарный поиск
+        if(number>a[a.Length/2])
+        {
+            for(int i = a.Length/2; i < a.Length; i++)
+            {
+                linearIterations++;
+                if(a[i]==number)
+                {
+                    Console.WriteLine($"Искомое число {number} находится под индексом {i}");
+                    Console.WriteLine($"Количество итераций бинарного поиска: {linearIterations}");
+                    nosearch=false;break;
+                }
+            }
+        }
+        else if(number<a[a.Length/2])
+        {
+            for(int i = a.Length/2; i > -1; i--)
+            {
+                linearIterations++;
+                if(a[i]==number)
+                {
+                    Console.WriteLine($"Искомое число {number} находится под индексом {i}");
+                    Console.WriteLine($"Количество итераций бинарного поиска: {linearIterations}");
+                    nosearch=false;break;
+                }
+            }
+        }
+        else if (number == a[a.Length/2])
+        {
+            Console.WriteLine($"Искомое число {number} находится под индексом {a.Length / 2}");
+            Console.WriteLine($"Количество итераций бинарного поиска: {linearIterations}");
+            nosearch=false;
+        }
+        if(nosearch){Console.WriteLine($"Искомое число {number} не найдено");}
         Console.WriteLine();
     }
     static void main51()
@@ -959,21 +1193,397 @@ char.IsPunctuation(c);  // true для ., , ! ? и т.п. */
     }
     static void main73()
     {
-        Console.WriteLine($"Реализовать вычисление факториала и N-го числа Фибоначчи рекурсивно; сравнить с итеративной версией по скорости при больших N.).");
-        static long FactorialR(int n)
+        Console.WriteLine($"Реализовать рекурсивный алгоритм быстрого возведения числа в степень (за O(log N) умножений).");
+        Console.WriteLine($"9^10 = {FastPow(9, 10)}");
+        Console.WriteLine($"9^11 = {FastPow(9, 11)}");
+        Console.WriteLine($"2^10 = {FastPow(2, 10)}");
+        Console.WriteLine($"5^0  = {FastPow(5, 0)}");
+        Console.WriteLine($"7^1  = {FastPow(7, 1)}");
+        static long FastPow(long s, int n)
         {
-            if (n < 0) throw new ArgumentException("Факториал отрицательного не определён");
-            if (n == 0 || n == 1) return 1; 
-            return n * FactorialR(n - 1);
-        }
-            static long FibR(int n)
-        {
-            if (n == 0) return 0;    
-            if (n == 1) return 1;    
-            return FibR(n - 1) + FibR(n - 2);
-        }
-        Console.WriteLine($"Рекурсивный факториал: {FactorialR(5)}");
-        Console.WriteLine($"Рекурсивный число фибоначчи{FibR(5)}");
-    }
+            if (n < 0)
+                throw new ArgumentException("Отрицательная степень не поддерживается");
+            if (n == 0)
+                return 1;                         // база: s^0 = 1
+            long half = FastPow(s, n / 2);        // s^(n/2) — делим ПОПОЛАМ
+            long result = half * half;             // (s^(n/2))²
+            if (n % 2 == 1)                        // если n нечётное
+                result *= s;                       // домножаем на s
 
+            return result;
+        }
+    }
+    static void main74()
+    {
+        Console.WriteLine($"Реализовать рекурсивную функцию перевода числа из десятичной системы счисления в произвольную (2–16).");
+        Console.WriteLine(ToBase(255, 16));   // FF
+        Console.WriteLine(ToBase(83, 8));     // 123
+        Console.WriteLine(ToBase(11, 2));     // 1011
+        Console.WriteLine(ToBase(0, 8));      // 0
+        Console.WriteLine(ToBase(5, 8));      // 5
+        Console.WriteLine(ToBase(47, 16));    // 2F
+        static string ToBase(int n, int b)
+        {
+            if (b < 2 || b > 16)
+                throw new ArgumentException("Основание должно быть 2..16");
+            if (n < 0)
+                throw new ArgumentException("Отрицательные не поддерживаются");
+            return ToBaseRec(n, b);
+        }
+        static string ToBaseRec(int n, int b)
+        {
+            // База: число уже меньше основания — это одна цифра
+            if (n < b)
+                return DigitToChar(n).ToString();
+            // Шаг: старшая часть + младшая цифра
+            int rem = n % b;
+            return ToBaseRec(n / b, b) + DigitToChar(rem);
+        }
+        static char DigitToChar(int d)
+        {
+            if (d >= 0 && d <= 9) return (char)('0' + d);   // 0..9
+            return (char)('A' + d - 10);                     // 10..15 → A..F
+        }
+    }
+    static void main75()
+    {
+        Console.WriteLine($"Реализовать рекурсивную функцию перевода числа из десятичной системы счисления в произвольную (2–16).");
+        Console.WriteLine(ToBase(255, 16));   // FF
+        Console.WriteLine(ToBase(83, 8));     // 123
+        Console.WriteLine(ToBase(11, 2));     // 1011
+        Console.WriteLine(ToBase(0, 8));      // 0
+        Console.WriteLine(ToBase(5, 8));      // 5
+        Console.WriteLine(ToBase(47, 16));    // 2F
+        static string ToBase(int n, int b)
+        {
+            if (b < 2 || b > 16)
+                throw new ArgumentException("Основание должно быть 2..16");
+            if (n < 0)
+                throw new ArgumentException("Отрицательные не поддерживаются");
+            return ToBaseRec(n, b);
+        }
+        static string ToBaseRec(int n, int b)
+        {
+            // База: число уже меньше основания — это одна цифра
+            if (n < b)
+                return DigitToChar(n).ToString();
+            // Шаг: старшая часть + младшая цифра
+            int rem = n % b;
+            return ToBaseRec(n / b, b) + DigitToChar(rem);
+        }
+        static char DigitToChar(int d)
+        {
+            if (d >= 0 && d <= 9) return (char)('0' + d);   // 0..9
+            return (char)('A' + d - 10);                     // 10..15 → A..F
+        }
+    }
+    static void main76()
+    {
+        Console.WriteLine("Реализовать рекурсивный алгоритм подсчёта количества способов разбить число N на слагаемые (разбиение числа).");
+        int n = 5;
+        Console.WriteLine($"p({n}) = {CountPartitions(n)}");
+        static int CountPartitions(int n)
+        {
+            if (n < 0) throw new ArgumentException("N >= 0");
+            if (n == 0) return 1;
+            return Count(n, n);
+        }
+        static int Count(int n, int max)
+        {
+            if (n == 0) return 1;
+            if (n < 0) return 0;
+            if (max == 0) return 0;
+            return Count(n, max - 1) + Count(n - max, max);
+        }
+    }
+    static void main81()
+    {
+        Console.WriteLine("Реализовать сортировку вставками и сортировку Шелла.");
+        //сортировка вставками
+        int[] a = {217,8,5981,24,31,29,7,80,54,12,427};
+        for(int i = 1; i < a.Length; i++)
+        {
+            int comparasion;
+            if (a[i - 1] > a[i])
+            {
+                comparasion=i-1;
+                while (comparasion >=0&&a[i] < a[comparasion]){
+                    comparasion--;
+                }
+                for(int j = i; j!=comparasion+1; j--)
+                {
+                    (a[j],a[j-1])=(a[j-1],a[j]);
+                }
+            }
+        }
+        Console.WriteLine("Массив после сортировки вставками: ");
+        for(int i = 0; i < a.Length; i++)
+        {
+            Console.Write($"{a[i]} ");
+        }
+        Console.WriteLine();
+        //сортировка Шелла
+        int[] b = {217,8,5981,24,31,29,7,80,54,12,427};
+        int gap = b.Length/2;
+        while(true)
+        {  
+            if(gap==1)
+            {
+                for(int i = 1; i < b.Length; i++)
+                {
+                    int key = b[i];
+                    int j = i;
+                    while (j > 0 && b[j-1] > key)
+                    {
+                        b[j] = b[j-1];
+                        j--;
+                    }
+                    b[j] = key;
+                }
+                break;
+            }
+            else
+            {
+                int i = 0;
+                for(;i+gap < b.Length; i++)
+                {
+                    if (b[i] > b[i+gap])
+                    {
+                        (b[i],b[gap+i])=(b[gap+i],b[i]);
+                    }
+                }
+                if (b[0] > b[gap])
+                {
+                    (b[0],b[gap])=(b[gap],b[0]);
+                }
+            }
+            gap /=2;
+        }
+        Console.WriteLine("Массив после сортировки Шелла: ");
+        for(int i = 0; i < b.Length; i++)
+        {
+            Console.Write($"{b[i]} ");
+        }
+        Console.WriteLine();
+        Console.WriteLine();
+    }
+    static void main82()
+    {
+        // 1. Разбиение: возвращает индекс pivot после перестановки
+        int[] a = {217,8,5981,24,31,29,7,80,54,12,427};
+        static int Partition(int[] a, int left, int right)
+        {
+            int pivot = a[right];       // опорный — последний
+            int i = left - 1;           // граница «меньших»
+
+            for (int j = left; j < right; j++)
+            {
+                if (a[j] <= pivot)
+                {
+                    i++;
+                    (a[i], a[j]) = (a[j], a[i]);   // своп через кортеж
+                }
+            }
+            (a[i + 1], a[right]) = (a[right], a[i + 1]);   // pivot на место
+            return i + 1;
+        }
+        // 2. Рекурсивная сортировка
+        static void QuickSort(int[] a, int left, int right)
+        {
+            if (left < right)                       // база: 0 или 1 элемент — уже отсортирован
+            {
+                int p = Partition(a, left, right);  // pivot встал на место
+                QuickSort(a, left, p - 1);          // левая часть
+                QuickSort(a, p + 1, right);         // правая часть
+            }
+        }
+        QuickSort(a, 0, a.Length - 1);
+        Console.WriteLine("Массив после быстрой сортировки: ");
+        for(int i = 0; i < a.Length; i++)
+        {
+            Console.Write($"{a[i]} ");
+        }
+        Console.WriteLine();
+        Console.WriteLine();
+    }
+    static void main83()
+    {
+        int[] a = {217,8,5981,24,31,29,7,80,54,12,427};
+        static void Merge(int[] a, int left, int mid, int right)
+        {
+            int n1 = mid - left + 1;
+            int n2 = right - mid;
+
+            int[] L = new int[n1];
+            int[] R = new int[n2];
+
+            for (int i = 0; i < n1; i++) L[i] = a[left + i];
+            for (int j = 0; j < n2; j++) R[j] = a[mid + 1 + j];
+
+            int x = 0, y = 0, k = left;
+
+            while (x < n1 && y < n2)
+            {
+                if (L[x] <= R[y]) a[k++] = L[x++];
+                else               a[k++] = R[y++];
+            }
+            while (x < n1) a[k++] = L[x++];
+            while (y < n2) a[k++] = R[y++];
+        }
+        // 2. Рекурсивная сортировка
+        static void MergeSort(int[] a, int left, int right)
+        {
+            if (left < right)                       // база: 0 или 1 элемент
+            {
+                int mid = (left + right) / 2;
+                MergeSort(a, left, mid);            // левая половина
+                MergeSort(a, mid + 1, right);       // правая половина
+                Merge(a, left, mid, right);         // слияние
+            }
+        }
+        MergeSort(a, 0, a.Length - 1);
+        Console.WriteLine("Массив после сортировки слиянием: ");
+        for(int i = 0; i < a.Length; i++)
+        {
+            Console.Write($"{a[i]} ");
+        }
+        Console.WriteLine();
+        Console.WriteLine();
+    }
+    static void main84()
+    {
+       
+            int[] sizes = {217,8,5981,24,31,29,7,80,54,12,427};
+            string[] types = { "Случайный", "Отсортированный", "Обратный" };
+
+            Console.WriteLine("Замеры времени сортировок (мс)\n");
+
+            foreach (string type in types)
+            {
+                Console.WriteLine($"=== Тип массива: {type} ===");
+                Console.WriteLine($"{"N",-8}{"Пузырёк",-12}{"Выбор",-12}{"Вставки",-12}{"Шелл",-12}{"Быстрая",-12}{"Слияние",-12}");
+
+                foreach (int n in sizes)
+                {
+                    int[] original = MakeArray(n, type);
+
+                    double t1 = Measure(BubbleSort,    (int[])original.Clone());
+                    double t2 = Measure(SelectionSort, (int[])original.Clone());
+                    double t3 = Measure(InsertionSort, (int[])original.Clone());
+                    double t4 = Measure(ShellSort,     (int[])original.Clone());
+                    double t5 = Measure(a => QuickSort(a, 0, a.Length - 1), (int[])original.Clone());
+                    double t6 = Measure(a => MergeSort(a, 0, a.Length - 1), (int[])original.Clone());
+
+                    Console.WriteLine($"{n,-8}{t1,-12:F3}{t2,-12:F3}{t3,-12:F3}{t4,-12:F3}{t5,-12:F3}{t6,-12:F3}");
+                }
+                Console.WriteLine();
+            }
+            static int[] MakeArray(int n, string type)
+            {
+                int[] a = new int[n];
+                Random rnd = new Random(42);
+                for (int i = 0; i < n; i++) a[i] = rnd.Next(0, n);
+
+                if (type == "Отсортированный") Array.Sort(a);
+                else if (type == "Обратный")   Array.Reverse(a);
+
+                return a;
+            }
+            static double Measure(Action<int[]> sort, int[] a)
+            {
+                var sw = Stopwatch.StartNew();
+                sort(a);
+                sw.Stop();
+                return sw.Elapsed.TotalMilliseconds;   // ← double, дробные мс
+            }
+
+            // --- сортировки (без изменений) ---
+            static void BubbleSort(int[] a)
+            {
+                for (int i = 0; i < a.Length - 1; i++)
+                {
+                    bool swapped = false;
+                    for (int j = 0; j < a.Length - 1 - i; j++)
+                        if (a[j] > a[j + 1]) { (a[j], a[j + 1]) = (a[j + 1], a[j]); swapped = true; }
+                    if (!swapped) break;
+                }
+            }
+
+            static void SelectionSort(int[] a)
+            {
+                for (int i = 0; i < a.Length - 1; i++)
+                {
+                    int minIdx = i;
+                    for (int j = i + 1; j < a.Length; j++)
+                        if (a[j] < a[minIdx]) minIdx = j;
+                    if (minIdx != i) (a[i], a[minIdx]) = (a[minIdx], a[i]);
+                }
+            }
+
+            static void InsertionSort(int[] a)
+            {
+                for (int i = 1; i < a.Length; i++)
+                {
+                    int key = a[i], j = i;
+                    while (j > 0 && a[j - 1] > key) { a[j] = a[j - 1]; j--; }
+                    a[j] = key;
+                }
+            }
+
+            static void ShellSort(int[] a)
+            {
+                for (int gap = a.Length / 2; gap > 0; gap /= 2)
+                    for (int i = gap; i < a.Length; i++)
+                    {
+                        int key = a[i], j = i;
+                        while (j >= gap && a[j - gap] > key) { a[j] = a[j - gap]; j -= gap; }
+                        a[j] = key;
+                    }
+            }
+
+            static void QuickSort(int[] a, int left, int right)
+            {
+                if (left >= right) return;
+                int pivot = a[right], i = left - 1;
+                for (int j = left; j < right; j++)
+                    if (a[j] <= pivot) { i++; (a[i], a[j]) = (a[j], a[i]); }
+                (a[i + 1], a[right]) = (a[right], a[i + 1]);
+
+                QuickSort(a, left, i);
+                QuickSort(a, i + 2, right);
+            }
+
+            static void MergeSort(int[] a, int left, int right)
+            {
+                if (left >= right) return;
+                int mid = (left + right) / 2;
+                MergeSort(a, left, mid);
+                MergeSort(a, mid + 1, right);
+                Merge(a, left, mid, right);
+            }
+
+            static void Merge(int[] a, int left, int mid, int right)
+            {
+                int n1 = mid - left + 1, n2 = right - mid;
+                int[] L = new int[n1], R = new int[n2];
+                for (int i = 0; i < n1; i++) L[i] = a[left + i];
+                for (int i = 0; i < n2; i++) R[i] = a[mid + 1 + i];
+
+                int x = 0, y = 0, k = left;
+                while (x < n1 && y < n2)
+                    a[k++] = (L[x] <= R[y]) ? L[x++] : R[y++];
+                while (x < n1) a[k++] = L[x++];
+                while (y < n2) a[k++] = R[y++];
+            }
+        
+    }
+    
+    static void main85()
+    {
+        
+    }
+    static void main86()
+    {
+        
+    }
 }
